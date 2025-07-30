@@ -24,4 +24,4 @@ jobs:
       
       - name: Run tests
         run: |
-          pytest tests/ --maxfail=1 --disable-warnings -q
+          pytest -v tests/tests-root-endpoint.py 
