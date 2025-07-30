@@ -8,7 +8,6 @@ on:
 jobs:
   Test-Action:
     runs-on: ubuntu-22.04
-    needs: Main-Action
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
