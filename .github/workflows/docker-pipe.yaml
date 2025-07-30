@@ -1,4 +1,4 @@
-name: Pipeline Inicial
+name: Pipeline Docker
 
 on:
   push:
