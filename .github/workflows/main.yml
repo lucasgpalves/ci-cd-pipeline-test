@@ -1,0 +1,62 @@
+name: Pipeline Inicial
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Main-Action:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run initial script
+        run: |
+          python main.py 
+
+  Test-Action:
+    runs-on: ubuntu-22.04
+    needs: Initial-Action
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run tests
+        run: |
+          pytest tests/ --maxfail=1 --disable-warnings -q
+
+  Docker-Action:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          docker compose up .
+
+      - name: Run Docker container
+        run: |
+          docker run --rm myapp:latest
